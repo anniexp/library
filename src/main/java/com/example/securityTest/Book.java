@@ -134,7 +134,7 @@ public class Book implements Serializable {
     
     @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, optional = true)
-   // @JoinColumn(name = "reportId")
+    @JoinColumn(name = "reportId")
     private Report report;
 
     public Report getReport() {
