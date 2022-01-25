@@ -45,35 +45,37 @@ public class AuthorController  {
     }
    
     
-       @GetMapping("/authors/new")
+       @GetMapping("authors/new")
     public String showNewBookForm(Model model) {
         List<Book> books = bookRepository.findAll();
         
         model.addAttribute("author", new Author());
         model.addAttribute("books", books);
         
-        return "add-author";
+        return "authors/add-author";
     }
     
     @PostMapping("/authors/addauthor")
     public String addAuthor(@Valid Author author, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-author";
+            return "authors/add-author";
         }
         
         authorService.save(author);
-        return "redirect:/";
+        model.addAttribute("authors", authorRepository.findAll());
+
+        return "redirect:/authors";
     }
 
     @GetMapping("/authors/edit/{authorId}")
     public String showAuthorUpdateForm( @PathVariable("authorId") long authorId, Model model) {
-        List<Author> authors = authorRepository.findAll();
+        List<Book> books = bookRepository.findAll();
         Author author = authorService.findById(authorId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid author Id:" + authorId));
         
         model.addAttribute("author", author);
-        model.addAttribute("authors", authors);
-        return "update-author";
+        model.addAttribute("books", books);
+        return "authors/update-author";
     }
 
     @PostMapping("/authors/update/{authorId}")
@@ -81,11 +83,12 @@ public class AuthorController  {
             BindingResult result, Model model) {
         if (result.hasErrors()) {
             author.setAuthorId(id);
-            return "update-author";
+            return "authors/update-author";
         }
 
         authorService.save(author);
-        return "redirect:/";
+        model.addAttribute("author", authorRepository.findAll());
+        return "redirect:/authors";
     }
 
     @GetMapping("/authors/delete/{authorId}")

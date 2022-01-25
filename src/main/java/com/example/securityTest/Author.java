@@ -26,6 +26,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
@@ -51,6 +52,8 @@ public class Author implements Serializable {
    @Max(60)
     
        @Column(name = "nationality")
+    @Max(255)
+    @Min(1)
     private String nationality;
 
    @OneToMany(targetEntity = Book.class ,mappedBy = "author",fetch = FetchType.LAZY,orphanRemoval = false, cascade = CascadeType.ALL )
@@ -58,9 +61,6 @@ public class Author implements Serializable {
    private Set<Book> books;
 
    
-  
-    
-
     public long getAuthorId() {
         return authorId;
     }
@@ -87,78 +87,19 @@ public class Author implements Serializable {
         this.authorName = authorName;
     }
 
-   
-    public Set<Book> getBook() {
+    public Set<Book> getBooks() {
         return books;
     }
 
-    public void setBook(Set<Book> book) {
-        this.books = book;    
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
-    protected Set<Book> getBooksInternal() {
-		if (this.books == null) {
-			this.books = new HashSet<>();
-		}
-		return this.books;
-	}
 
-	protected void setPetsInternal(Set<Book> books) {
-		this.books = books;
-	}
-
-	public List<Book> getBooks() {
-		List<Book> sortedBooks = new ArrayList<>(getBooksInternal());
-		PropertyComparator.sort(sortedBooks, new MutableSortDefinition("title", true, true));
-		return Collections.unmodifiableList(sortedBooks);
-	}
-
-	public void addBook(Book book) {
-		if (book.isNew()) {
-			getBooksInternal().add(book);
-		}
-		book.setAuthor(this);
-	}
-
-	
-	public Book getBook(String title) {
-		return getBook(title);
-	}
-        public boolean isNew() {
-		return this.authorId == 0;
-	}
-
-	/**
-	 * Return the Pet with the given name, or null if none found for this Owner.
-	 * @param name to test
-	 * @return true if pet name is already in use
-	 */
-	public Book getBook(String title, boolean ignoreNew) {
-		title = title.toLowerCase();
-		for (Book book : getBooksInternal()) {
-			if (!ignoreNew || !book.isNew()) {
-				String bookTitle = book.getTitle();
-				bookTitle = bookTitle.toLowerCase();
-				if (bookTitle.equals(title)) {
-					return book;
-				}
-			}
-		}
-		return null;
-	}
-
-    
-    
+   
+  
     public Author() {
         
     }
-
-  /*  public Author(long authorId, String authorName, String nationality, Set<Book> book, long bookId) {
-        this.authorId = authorId;
-        this.authorName = authorName;
-        this.nationality = nationality;
-        this.book = book;
-        this.bookId = bookId;
-    }*/
 
     public Author(long authorId, String authorName, String nationality, Set<Book> books) {
         this.authorId = authorId;

@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
@@ -23,6 +25,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "book")
 public class Book implements Serializable {
 
+    @Null(groups = OnCreate.class)
+    @NotNull(groups = OnUpdate.class)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookId;

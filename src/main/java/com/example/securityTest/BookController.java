@@ -25,7 +25,7 @@ public class BookController {
     @GetMapping("/books")
     public String books(Model model) {
         List<Book>listBooks = bookRepository.findAll();
-        model.addAttribute("book", listBooks);
+        model.addAttribute("books", listBooks);
         return "books";
     }
     
@@ -42,7 +42,7 @@ public class BookController {
 
         bookService.save(book);
         model.addAttribute("book", bookRepository.findAll());
-        return "redirect:/";
+        return "redirect:/books";
     }
 
     @GetMapping("/books/edit/{bookId}")
@@ -73,13 +73,13 @@ public class BookController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + bookId));
         bookRepository.delete(book);
         model.addAttribute("book", bookRepository.findAll());
-        return "redirect:/";
+        return "redirect:/books";
     }
     @GetMapping ("/books/search")
     public String search (@RequestParam(name = "search", required = false) String title, Model model)
     {
      model.addAttribute("book", bookRepository.findByTitleStartingWith(title));
-     return "books";
+     return "redirect:/books";
     }
     
     
