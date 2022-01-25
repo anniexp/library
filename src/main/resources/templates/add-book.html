@@ -16,11 +16,17 @@
                 <div class="col-md-6">
                     <form action="#" th:action="@{/addbook}" th:object="${book}" method="post">
                         <div class="row">
-                            <div class="form-group col-md-6">
+                           
+                             <div class="form-group col-md-6">
                                 <label for="author" class="col-form-label">Author</label>
-                                <input type="text" th:field="*{author}" class="form-control" id="name" placeholder="Author">
+                                <select th:field="*{author}" class="form-control" id="author" placeholder="Author">
+                                    <th:block th:each="author ${authors}">
+                                        <option th:text="${author.authorName}" th:value="${author.authorId}"/>
+                                    </th:block>
+                                </select>
                                 <span th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="text-danger"></span>
                             </div>
+                            
                             <div class="form-group col-md-6">
                                 <label for="title" class="col-form-label">Title</label>
                                 <input type="text" th:field="*{title}" class="form-control" id="email" placeholder="Title">

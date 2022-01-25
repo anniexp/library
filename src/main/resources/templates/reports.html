@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+         <div class="container" sec:authorize="hasRole('ROLE_ADMIN')" >
+            <h2>Search for reports</h2>
+            <form action="#" th:action="@{/reports}" method="get">
+                <input type="text" name="search" id="searchReport"/>
+                <input type="submit" value="Search"/>
+            </form>
+        </div>
+        <div th:switch="${report}" class="container my-5" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2 th:case="null">No borrowed books yet!</h2>
+ 
+                    <div th:case="*">
+                        <h2 class="my-5">Borrow Reports</h2>
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                                <tr>
+                                    <th>report id</th>
+                                    <th>borrower</th>
+                                    <th>book Id</th>
+                                    <td>created at</td>
+                                    <td>last updated</td>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="repor : ${report}">
+                                    <td th:text="${repor.reportId}"></td>
+                                    <td th:text="${repor.borrower}"></td>
+                                    
+                                    <td th:text="${repor.bookId}"></td>
+                                    <td th:text="${repor.dateCreated}"></td>
+                                    <td th:text="${repor.lastUpdated}"></td>
+                                    <td><a th:href="@{/edit/{reportId}(reportId=${repor.reportId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                    <td><a th:href="@{/delete/{reportId}(reportId=${repor.reportId})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>      
+                    <p class="my-5"><a href="signup" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container" sec:authorize="hasRole('ROLE_USER')" >
+            <h2>Error 403 Forbidden!</h2>
+            
+        </div>
+        
+    </body>
+</html>

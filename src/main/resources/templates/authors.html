@@ -13,12 +13,12 @@ and open the template in the editor.
     <body>
         <div class="container">
             <h2>Search for authors</h2>
-            <form action="#" th:action="@{/authors}" method="get">
-                <input type="text" name="search" id="search"/>
+            <form action="#" th:action="@{/authors/searchUthors}" method="get">
+                <input type="text" name="searchAuthor" th:value="${authorName}" id="searchAuthor" size="50"/>
                 <input type="submit" value="Search"/>
             </form>
         </div>
-        <div th:switch="${authors}" class="container my-5">
+        <div th:switch="${authors}" class="container my-5" sec:authorize="isAuthenticated()">
             <div class="row">
                 <div class="col-md-6">
                     <h2 th:case="null">No authors yet!</h2>
@@ -29,28 +29,35 @@ and open the template in the editor.
                             <thead>
                                 <tr>
                                     <th>Author</th>
-                                    <th>Book</th>
+                                    <th>Books</th>
                                     <th>Nationality</th>
-
-                                    <th sec:authorize="hasRole('ROLE_ADMIN')">Edit</th>
-                                    <th sec:authorize="hasRole('ROLE_ADMIN')">Delete</th>
+                                   
+                                    <th >Edit</th>
+                                    <th >Delete</th>
                                     
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="author : ${authors}">
                                     <td th:text="${author.authorName}"></td>
-                                    <td th:text="${author.book}"></td>
+                                    <td><ul th:each="bok : ${author.books}" >
+                                            <li th:text="${bok.title}"></li></ul></td>
+                                 <!--  <td th:text="${author.books.title}"></td>-->
                                     <td th:text="${author.nationality}"></td>
 
-                                    <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/edit/{authorId}(authorId=${author.authorId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                    <td><a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/delete/{authorId}(authorId=${author.authorId})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                     <!--  <td> <a  th:href="@{/edit/{authorId}(authorId=${author.authorId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                    <td><a  th:href="@{/delete/{authorId}(authorId=${author.authorId})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>-->
+                                     <td > <a  sec:authorize="hasRole('ROLE_ADMIN')"  href="@{/authors/edit/{authorId}(authorId=${author.authorId})"><i class="fas fa-user-edit ml-2"></i>Edit</a></td> 
+                            
+                                     <td><a  sec:authorize="hasRole('ROLE_ADMIN')"  href="@{/authors/delete/{authorId}(authorId=${author.authorId})}" ><i class="fas fa-user-times ml-2"></i>Delete</a></td>
 
                                 </tr>
                             </tbody>
                         </table>
                     </div>      
                     <p class="my-5"><a href="signup" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
+                    <p class="my-5"><a href="authors/new" class="btn btn-primary"><i class="fas fa-user-plus ml-2"></i></a></p>
+
                 </div>
             </div>
         </div>

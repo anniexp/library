@@ -16,12 +16,13 @@
     <div sec:authorize="isAuthenticated()">
         This content is only shown to authenticated users.
         <div class="container">
-            <a href="books" class="btn btn-info" role="button">Books</a>
-            <a href="authors" class="btn btn-info" role="button">Authors</a>
+            <a href="/books" class="btn btn-info" role="button">Books</a>
+            <a href="/authors" class="btn btn-info" role="button">Authors</a>
         </div>
     </div>
     <div sec:authorize="hasRole('ROLE_ADMIN')">
         This content is only shown to administrators.
+        <a href="reports" class="btn btn-info" role="button">Rented Books Reports</a>
     </div>
     <div sec:authorize="hasRole('ROLE_USER')">
         This content is only shown to users.
