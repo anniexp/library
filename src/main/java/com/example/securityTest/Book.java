@@ -16,6 +16,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "book")
@@ -35,7 +37,7 @@ public class Book implements Serializable {
     //[ForeignKey("authorId")]
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false, referencedColumnName = "author_id")
-    @Fetch(FetchMode.JOIN)
+    //@Fetch(FetchMode.JOIN)
     //  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Author author;
     //private Integer authorId;
@@ -130,8 +132,9 @@ public class Book implements Serializable {
         return this.bookId == 0;
     }
     
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @OneToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "reportId")
+   // @JoinColumn(name = "reportId")
     private Report report;
 
     public Report getReport() {

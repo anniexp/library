@@ -14,10 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
@@ -34,15 +37,32 @@ public class Report
     @Column(name = "report_id")
     private long reportId;
     
-    
-   @OneToOne(mappedBy = "report", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-   private Book book;
+   // @OnDelete(action = OnDeleteAction.CASCADE)
+   @OneToOne(mappedBy = "report",targetEntity = Book.class, fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = false)
+   @JoinColumn(name = "book_id" , referencedColumnName = "book_id")
+    private Book book;
 
     
 @Column(name = "Borrower")
     
 private String borrower;
-        ;
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public String getBorrower() {
+        return borrower;
+    }
+
+    public void setBorrower(String borrower) {
+        this.borrower = borrower;
+    }
+        
    // @NotBlank(message = "Author name is mandatory")
     //private String author;
 @Column(name = "date_created")

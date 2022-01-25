@@ -13,7 +13,7 @@ and open the template in the editor.
     <body>
         <div class="container">
             <h2>Search for authors</h2>
-            <form action="#" th:action="@{/authors/searchUthors}" method="get">
+            <form action="#" th:action="@{/authors/}" method="get">
                 <input type="text" name="searchAuthor" th:value="${authorName}" id="searchAuthor" size="50"/>
                 <input type="submit" value="Search"/>
             </form>

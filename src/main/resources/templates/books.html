@@ -14,7 +14,7 @@ and open the template in the editor.
         <div class="container">
             
         </div>
-        <div th:switch="${book}" class="container my-5">
+        <div th:switch="${books}" class="container my-5">
             <div class="row">
                 <div class="col-md-6">
                     <h2 th:case="null">No books yet!</h2>
@@ -36,12 +36,12 @@ and open the template in the editor.
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="bok : ${book}">
+                                <tr th:each="bok : ${books}">
                                     <td th:text="${bok.title}"></td>
                                     <td th:text="${bok.isbn}"></td>                                 
                                     <td th:text="${bok.yearOfPublishing}"></td>  
                                    <td th:text="${bok.isRented}"></td>  
-                                   <!---   <td th:text="${bok.author}"></td>  -->
+                                   <td th:text="${bok.author}"></td>
                                     <td ><a href="@{/books/edit/{bookId}(bookId=${bok.bookId})}" class="btn btn-primary">  </a>
                                  <!---         <a sec:authorize="hasRole('ROLE_USER')" th:href="@{/borrow/{bookId}(bookId=${bok.bookId})}" class="btn btn-primary">  -->                                           
                                  <!---       <a sec:authorize="hasRole('ROLE_USER')" th:href="${book.rented} ?: '@{/borrow/{id}(id=${book.id})}'"  class="btn btn-primary"/>-->

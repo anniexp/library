@@ -18,7 +18,7 @@ and open the template in the editor.
                 <input type="submit" value="Search"/>
             </form>
         </div>
-        <div th:switch="${report}" class="container my-5" sec:authorize="hasRole('ROLE_ADMIN')">
+        <div th:switch="${reports}" class="container my-5" sec:authorize="hasRole('ROLE_ADMIN')">
             <div class="row">
                 <div class="col-md-6">
                     <h2 th:case="null">No borrowed books yet!</h2>
@@ -30,7 +30,7 @@ and open the template in the editor.
                                 <tr>
                                     <th>report id</th>
                                     <th>borrower</th>
-                                    <th>book Id</th>
+                                    <th>book</th>
                                     <td>created at</td>
                                     <td>last updated</td>
                                     <th>Edit</th>
@@ -39,11 +39,11 @@ and open the template in the editor.
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="repor : ${report}">
+                                <tr th:each="repor : ${reports}">
                                     <td th:text="${repor.reportId}"></td>
                                     <td th:text="${repor.borrower}"></td>
                                     
-                                    <td th:text="${repor.bookId}"></td>
+                                    <td th:text="${repor.book}"></td>
                                     <td th:text="${repor.dateCreated}"></td>
                                     <td th:text="${repor.lastUpdated}"></td>
                                     <td><a th:href="@{/edit/{reportId}(reportId=${repor.reportId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>

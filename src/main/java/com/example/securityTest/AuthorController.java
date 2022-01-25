@@ -102,9 +102,10 @@ public class AuthorController  {
         
   if(authorName!=null) {
    List<Author> authors =  authorRepository.findByKeyword(authorName);
+  
    model.addAttribute("authors", authors);
   }else {
-  List<Author> authors = authorRepository.findAll();
+  List<Author> authors = null;
   model.addAttribute("authors", authors);}
  
         return "authors";
