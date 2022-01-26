@@ -38,11 +38,8 @@ public class Book implements Serializable {
     @Column(name = "is_rented")
     private boolean isRented;
 
-    //[ForeignKey("authorId")]
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "author_id", nullable = false, referencedColumnName = "author_id")
-    //@Fetch(FetchMode.JOIN)
-    //  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "author_id", nullable = false, referencedColumnName = "author_id")  
     private Author author;
     //private Integer authorId;
     //@NotBlank(message = "Author id is mandatory") @Max(255)@Min(1)
@@ -76,13 +73,7 @@ public class Book implements Serializable {
         this.author = author;
     }
 
-    /*  public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
-    }*/
+   
     public long getBookId() {
         return bookId;
     }

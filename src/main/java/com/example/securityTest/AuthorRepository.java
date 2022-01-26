@@ -17,12 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long>{
-   
-
         List<Author> findByAuthorName(String authorName);
-        List<Author> findByAuthorNameStartingWith(String authorName);
-        
-        
+        List<Author> findByAuthorNameStartingWith(String authorName);       
          //Custom query
  @Query(value = "select * from authors s where s.author_name like %:authorName% ", nativeQuery = true)
  List<Author> findByKeyword(@Param("authorName") String authorName);

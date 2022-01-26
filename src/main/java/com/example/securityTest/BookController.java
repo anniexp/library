@@ -39,7 +39,7 @@ public class BookController {
        {
         List<Author> authors= authorRepository.findAll();
         
-        model.addAttribute("books", new Book());
+        model.addAttribute("book", new Book());
         model.addAttribute("authors", authors);
        
         return "add-book";
@@ -113,7 +113,7 @@ public class BookController {
             book.setIsRented(true);
             bookRepository.save(book);
             
-            
+           
             reportRepository.save(report);
             
           model.addAttribute("book", bookRepository.findAll());

@@ -25,11 +25,12 @@ public class UserController {
 	public String showRegistrationForm(Model model) {
 		model.addAttribute("user", new User());
 
-		return "LoginRegister/Register";
-	}
-
-	@PostMapping("/process_register")
-	public String processRegister(User user) {
+		return "registration";
+	
+        }
+        
+	@PostMapping("/post_register")
+	public String postRegister(User user) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
