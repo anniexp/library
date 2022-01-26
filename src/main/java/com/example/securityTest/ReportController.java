@@ -29,12 +29,12 @@ BookService bookService;
         return "reports";
     } 
      @GetMapping("/reports/new")
-    public String showNewBookForm(Model model, @Valid Book book, String name) {
+    public String showNewBookForm(Model model, @Valid Book book, String name, @Valid User user) {
        
          
         model.addAttribute("report", new Report());
         model.addAttribute("book", book);
-        
+        model.addAttribute("user", user);
         
         return "add-report";
     }

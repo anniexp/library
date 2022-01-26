@@ -5,9 +5,14 @@
  */
 package com.example.securityTest;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 /**
  *
  * @author Lenovo
  */
-public enum Role { ROLE_USER, ROLE_ADMIN }  
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
+}
