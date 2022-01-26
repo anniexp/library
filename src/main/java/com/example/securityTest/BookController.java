@@ -20,17 +20,28 @@ public class BookController {
     @Autowired
     ReportsRepository reportRepository;
     
-    
+     @Autowired
+     AuthorRepository authorRepository;
 
     @GetMapping("/books")
-    public String books(Model model) {
-        List<Book>listBooks = bookRepository.findAll();
-        model.addAttribute("books", listBooks);
+    public String books(Model model, String keyword) {
+        model.addAttribute("books", bookRepository.findAll());
+         if(keyword!=null) {
+                    model.addAttribute("books", bookService.findByKeyword(keyword));
+                }
+               
+        
         return "books";
     }
     
     @GetMapping("/books/signup")
-    public String showSignUpForm(Book book) {
+    public String showSignUpForm(Model model) 
+       {
+        List<Author> authors= authorRepository.findAll();
+        
+        model.addAttribute("books", new Book());
+        model.addAttribute("authors", authors);
+       
         return "add-book";
     }
 
@@ -41,16 +52,16 @@ public class BookController {
         }
 
         bookService.save(book);
-        model.addAttribute("book", bookRepository.findAll());
+        model.addAttribute("books", bookRepository.findAll());
         return "redirect:/books";
     }
 
-    @GetMapping("/books/edit/{bookId}")
+    @GetMapping("/books/edit/{id}")
     public String showUpdateForm(@PathVariable("bookId") long bookId, Model model) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + bookId));
 
-        model.addAttribute("book", book);
+        model.addAttribute("books", book);
         return "update-book";
     }
 
@@ -63,7 +74,7 @@ public class BookController {
         }
 
         bookRepository.save(book);
-        model.addAttribute("book", bookRepository.findAll());
+        model.addAttribute("books", bookRepository.findAll());
         return "redirect:/";
     }
 
@@ -72,7 +83,7 @@ public class BookController {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + bookId));
         bookRepository.delete(book);
-        model.addAttribute("book", bookRepository.findAll());
+        model.addAttribute("books", bookRepository.findAll());
         return "redirect:/books";
     }
     @GetMapping ("/books/search")

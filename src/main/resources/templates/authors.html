@@ -18,9 +18,9 @@ and open the template in the editor.
     <body>
         <div class="container">
             <h2>Search for authors</h2>
-            <form action="#" th:action="@{/authors/}" method="get">
+            <form  th:action="@{/authors}" method="get">
                 <input type="text" name="searchAuthor" th:value="${authorName}" id="searchAuthor" size="50"/>
-                <input type="submit" value="Search"/>
+                <button type="submit" value="Search"/>
             </form>
         </div>
         <div th:switch="${authors}" class="container my-5" sec:authorize="isAuthenticated()">
@@ -52,9 +52,9 @@ and open the template in the editor.
 
                                      <!--  <td> <a  th:href="@{/edit/{authorId}(authorId=${author.authorId})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
                                     <td><a  th:href="@{/delete/{authorId}(authorId=${author.authorId})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>-->
-                                     <td > <a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/authors/edit/{id}(id=${author.authorId})"><i class="fas fa-user-edit ml-2"></i>Edit</a></td> 
+                                     <td > <a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/authors/edit/{authorId}(authorId=${author.authorId})"><i class="fas fa-user-edit ml-2"></i>Edit</a></td> 
                             
-                                     <td><a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/authors/delete/{id}(id=${author.authorId})}" ><i class="fas fa-user-times ml-2"></i>Delete</a></td>
+                                     <td><a sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/authors/delete/{authorId}(authorId=${author.authorId})}" ><i class="fas fa-user-times ml-2"></i>Delete</a></td>
 
                                 </tr>
                             </tbody>
